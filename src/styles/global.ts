@@ -8,8 +8,7 @@ const GlobalStyle = createGlobalStyle`
       box-sizing:border-box;
       font-family: 'Montserrat', sans-serif;
 
-      background: #2C2C2C;
-      color: #fff;
+      background: transparent;
   }
   
   /* // para os inputs nao ficarem com o azulzinho  outline:0  */
@@ -25,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root {
       height:100vh;
       overflow-x:hidden;
+  }
+
+  button {
+    border: none;
   }
 
   body, input, textarea, button {
