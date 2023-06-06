@@ -4,7 +4,9 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
 
-  background: ${props => props.theme.colors.secondary};
+  background: ${props => props.theme.colors.black00};
+
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
   
   height: 50px;
   padding-left: 10px;
@@ -12,7 +14,7 @@ export const Container = styled.div`
 
 export const Title = styled.span`
   margin-left: 20px;
-  color: ${props => props.theme.colors.black00};
+  color: ${props => props.theme.colors.black500};
 `;
 
 export const ButtonToggle = styled.button`

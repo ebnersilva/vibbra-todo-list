@@ -1,25 +1,30 @@
 import { Container, Title, ButtonToggle } from './styles';
-import { AiOutlineMenu } from "react-icons/ai";
-import { useAppDispatch } from '../../store/hooks';
-import { incremented } from '../../store/counter/counterSlice';
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useTheme } from 'styled-components';
+import { toggleSidebar } from '../../store/app/appSlice';
 
 export default function Header() {
+  const dispatch = useAppDispatch();
   const { colors } = useTheme();
 
-  const dispatch = useAppDispatch();
+  const { isSidebarOpened } = useAppSelector(state => state.app.data);
 
 
   function handleOnClickHeader() {
-    dispatch(incremented());
-
-
+    dispatch(toggleSidebar());
   }
 
   return (
     <Container>
       <ButtonToggle onClick={handleOnClickHeader}>
-        <AiOutlineMenu size={20} color={colors.black00} />
+        {isSidebarOpened && (
+          <AiOutlineClose size={20} color={colors.black500} />
+        )}
+
+        {!isSidebarOpened && (
+          <AiOutlineMenu size={20} color={colors.black500} />
+        )}
       </ButtonToggle>
 
       <Title>Vibbra - Todo App</Title>

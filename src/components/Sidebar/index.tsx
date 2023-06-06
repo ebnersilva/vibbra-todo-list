@@ -1,14 +1,20 @@
-import { Container, ItemText, SidebarItem } from './styles';
+import { useAppSelector } from '../../store/hooks';
+import { Container, SidebarItem } from './styles';
+import { AiOutlineHome, AiFillQuestionCircle } from "react-icons/ai";
 
 export default function Sidebar() {
+  const { isSidebarOpened } = useAppSelector(state => state.app.data)
+
   return (
-    <Container>
+    <Container isOpened={isSidebarOpened}>
       <SidebarItem>
-        <ItemText>Home</ItemText>
+        <AiOutlineHome   />
+        Home
       </SidebarItem>
 
       <SidebarItem>
-        <ItemText>Sobre</ItemText>
+        <AiFillQuestionCircle />
+        Sobre
       </SidebarItem>
     </Container>
   )

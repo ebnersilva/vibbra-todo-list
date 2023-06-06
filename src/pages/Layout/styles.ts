@@ -13,7 +13,7 @@ export const Main = styled.div`
   
   flex: 1;
 
-  background: yellow;
+  /* background: yellow; */
 `;
 
 export const ContentContainer = styled.div`

@@ -4,5 +4,9 @@ export const theme = {
     secondary: '#000000',
 
     black00: '#FFF',
+    black500: '#081224',
+
+    gray200: '#F2F2F2',
+    gray300: '#9B9793'
   }
 };
