@@ -4,10 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex: 1;
 
-  flex-direction: column;
-
   align-items: center;
-  justify-content: center;
+
+  flex-direction: column;
 
   p {
     color: #000;
@@ -17,7 +16,6 @@ export const Container = styled.div`
 export const TodosContainer = styled.div`
   display: flex;
   width: 80%;
-  justify-content: center;
 
   margin-top: 10px;
 
@@ -39,3 +37,4 @@ export const Form = styled.div`
 
   width: 90%;
 `;
+

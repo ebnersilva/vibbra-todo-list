@@ -4,15 +4,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px;
+  flex-direction: column;
 
   background: ${props => props.theme.colors.black00};
 
   position: relative;
 
-  width: 80%;
-  height: 100px;
+  width: 30%;
+  height: 110px;
 
   border-radius: 8px;
 
@@ -28,13 +27,26 @@ export const Container = styled.div`
 `;
 
 export const TodoTitle = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
     color: ${props => props.theme.colors.black500};
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
+    width: 100%;
+`;
 
-    min-width: 60%;
+export const OptionsContainer = styled.div`
+  display: flex;
+  width: 100%;
 
-    margin: 20px;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 30px;
 `;
 
 export const Option = styled.button`
@@ -79,6 +91,24 @@ export const HasSubTodoContainer = styled.div`
 
   span {
     font-size: 10px;
+    color: ${props => props.theme.colors.black00};
+  }
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  bottom: 0;
+  height: 18px;
+  width: 100%;
+
+  background: ${props => props.theme.colors.black500};
+
+  span {
+    font-size: 12px;
     color: ${props => props.theme.colors.black00};
   }
 `;

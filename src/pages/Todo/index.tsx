@@ -15,19 +15,21 @@ import Select from '../../components/Select';
 import { useNavigate } from 'react-router-dom';
 
 import useTodo from '../../hooks/useTodo';
+import { toast } from 'react-toastify';
 
 export default function Todo() {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
-  const { addTodo } = useTodo();
+  const { addTodo, toggleTodo } = useTodo();
 
   const [todoValue, setTodoValue] = useState('');
   const [parentTodo, setParentTodo] = useState('');
 
   const todos = useAppSelector(state => state.todos.data);
   const {isAddTodoModalOpened} = useAppSelector(state => state.app.data);
+  const { userLoggedIn } = useAppSelector(state => state.auth.data);
 
   function clearForm() {
     setTodoValue('');
@@ -60,17 +62,21 @@ export default function Todo() {
     clearForm();
   }
 
-  const handleMakeTodoFinished = (todo: ITodo) => {
-    const updates: Record<string, ITodo> = {
-      [`todos/${todo.id}`]: { ...todo, isFinished: !todo.isFinished },
-    };
+  const handleMakeTodoFinished = async (todo: ITodo) => {
+    const { status, message } = await toggleTodo(todo.id);
 
-    return update(ref(firebaseDatabase), updates);
+    if (!status) {
+      toast.error(message);
+      return;
+    }
+
+    toast.success('Dados alterados com sucesso!')
   }
 
   const handleRefresh = useCallback(() => {
-    const starCountRef = ref(firebaseDatabase, 'todos');
-    onValue(starCountRef, (snapshot) => {
+    const todosRef = ref(firebaseDatabase, 'todos');
+
+    onValue(todosRef, (snapshot) => {
       const data = snapshot.val();
 
       if (!data) {
@@ -87,7 +93,7 @@ export default function Todo() {
         };
       });
 
-      const onlyParentTodos = parsedTodos.filter(todo => todo.parentTodo === '')
+      const onlyParentTodos = parsedTodos.filter(todo => todo.parentTodo === '').sort((a, b) => Number(a.createdAt) - Number(b.createdAt));
 
       dispatch(setData(onlyParentTodos))
     });
@@ -106,17 +112,25 @@ export default function Todo() {
           <EmptyDataText>Nenhum todo cadastrado</EmptyDataText>
         )}
 
-        {todos.map(todo => (
-          <Card 
-            key={todo.id} 
-            task={todo.task} 
-            parentTodo={todo.parentTodo} 
-            isFinished={todo.isFinished}
-            onFinishTask={() => handleMakeTodoFinished(todo)}
-            onUpdateOptionPressed={() => navigate(`edit-todo/${todo.id}`)}
-            onDeleteOptionPressed={() => handleDeleteTodo(todo.id)}
-          />
-        ))}
+        {todos.map(todo => {
+          if (!userLoggedIn) return;
+
+          const isMine = todo.ownerEmail === userLoggedIn.email;
+
+          return (
+            <Card 
+              key={todo.id} 
+              task={todo.task} 
+              parentTodo={todo.parentTodo} 
+              isFinished={todo.isFinished}
+              ownerEmail={todo.ownerEmail}
+              isMine={isMine}
+              onFinishTask={() => handleMakeTodoFinished(todo)}
+              onUpdateOptionPressed={() => navigate(`edit-todo/${todo.id}`)}
+              onDeleteOptionPressed={() => handleDeleteTodo(todo.id)}
+            />
+          )
+        })}
       </TodosContainer>
 
       <Modal 

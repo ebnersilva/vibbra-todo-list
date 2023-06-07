@@ -1,12 +1,15 @@
-import { child, get, ref, set, update } from 'firebase/database';
+import { child, get, ref, serverTimestamp, set, update } from 'firebase/database';
 import { v4 as uuidv4 } from 'uuid'
 import { firebaseDatabase } from '../services/firebase';
 import { ITodo } from '../store/todos/todosSlice';
+import { useAppSelector } from '../store/hooks';
+import { toast } from 'react-toastify';
 
 export default function useTodo() {
+  const { userLoggedIn } = useAppSelector(state => state.auth.data);
+
   async function addTodo(todoValue: string, parentTodo: string) {
-    if (!todoValue) {
-      alert('Dados inválidos');
+    if (!todoValue || !userLoggedIn) {
       return {
         message: 'Dados inválidos',
         status: false,
@@ -17,9 +20,13 @@ export default function useTodo() {
 
     try {
       await set(ref(firebaseDatabase, `todos/${id}`), {
+        ownerId: userLoggedIn.uid,
+        ownerEmail: userLoggedIn.email,
         task: todoValue,
         parentTodo: parentTodo || '',
-        isFinished: false
+        isFinished: false,
+        isShared: false,
+        createdAt: serverTimestamp()
       });
 
       return {
