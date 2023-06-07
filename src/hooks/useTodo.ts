@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { firebaseDatabase } from '../services/firebase';
 import { ITodo } from '../store/todos/todosSlice';
 import { useAppSelector } from '../store/hooks';
-import { toast } from 'react-toastify';
 
 export default function useTodo() {
   const { userLoggedIn } = useAppSelector(state => state.auth.data);

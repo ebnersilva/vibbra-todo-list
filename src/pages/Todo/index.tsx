@@ -1,4 +1,4 @@
-import { onValue, ref, remove, update } from 'firebase/database';
+import { onValue, ref, remove } from 'firebase/database';
 import { Container, Form, TodosContainer, EmptyDataText } from './styles';
 import { firebaseDatabase } from '../../services/firebase';
 
@@ -128,6 +128,7 @@ export default function Todo() {
               onFinishTask={() => handleMakeTodoFinished(todo)}
               onUpdateOptionPressed={() => navigate(`edit-todo/${todo.id}`)}
               onDeleteOptionPressed={() => handleDeleteTodo(todo.id)}
+              onShareOptionPressed={() => navigate(`share-todo/${todo.id}`)}
             />
           )
         })}
