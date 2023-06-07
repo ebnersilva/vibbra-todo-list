@@ -15,7 +15,7 @@ export const Container = styled.div`
   padding-right: 10px;
 `;
 
-export const LeftCard = styled.div`
+export const SectionContent = styled.div`
   display: flex;
 
   align-items: center;
@@ -35,13 +35,14 @@ export const ButtonToggle = styled.button`
   width: 30px;
 `;
 
-export const AddButton = styled.button`
+export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
 
   height: 30px;
   width: 40px;
+  margin-right: 20px;
 
   border-radius: 8px;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
