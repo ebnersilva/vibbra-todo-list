@@ -31,6 +31,7 @@ Para utilizar a aplicação primeiro é necessário você cadastrar ao menos 1 i
 - Vinculo como sub item
 - Desvínculo de sub item
 - Remoção de um item
+- Enviar por e-mail um todo para outra pessoa
 
 ## Extras
 
