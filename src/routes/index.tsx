@@ -53,8 +53,21 @@ export default function Router() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      currentUser?.uid;
+      currentUser?.email;
+
+      if (!currentUser || !currentUser.email) {
+        dispatch(setUserLoggedIn({
+          data: null
+        }))
+        return;  
+      }
+
       dispatch(setUserLoggedIn({
-        data: currentUser
+        data: {
+          uid: currentUser.uid,
+          email: currentUser.email
+        }
       }))
     })
 

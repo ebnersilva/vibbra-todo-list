@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import { toast } from 'react-toastify';
+import { FirebaseError } from 'firebase/app';
 
 export default function Login() {
   const [isSigning, setIsSigning] = useState(true);
@@ -29,15 +31,16 @@ export default function Login() {
   }, [registerEmail, registerPassword]);
 
   const handleLogin = useCallback(async () =>{
-    try {
       if (!loginEmail || !loginPassword) {
         alert('Dados inválidos')
         return;
       }
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-    }catch (error) {
-      alert('Erro ao fazer o login. Tente novamente!');
-    }
+
+      try {
+        await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      } catch (err: FirebaseError | any) {
+        toast(`Erro ao fazer login: ${err.code}`)
+      }
   }, [loginEmail, loginPassword]);
 
   const handleOnSignUp = () => {

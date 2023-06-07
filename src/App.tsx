@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from 'styled-components';
 import { theme } from "./styles/theme";
 import GlobalStyle from './styles/global';
@@ -5,6 +6,7 @@ import GlobalStyle from './styles/global';
 import { BrowserRouter } from "react-router-dom";
 
 import Router from './routes';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
       <BrowserRouter>
         <Router />
       </BrowserRouter>
+
+      <ToastContainer />
       
       <GlobalStyle />
     </ThemeProvider>
