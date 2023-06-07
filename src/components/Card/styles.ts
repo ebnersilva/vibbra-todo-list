@@ -4,13 +4,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 20px;
 
   background: ${props => props.theme.colors.black00};
 
   position: relative;
 
-  width: 350px;
+  width: 80%;
   height: 100px;
 
   border-radius: 8px;
@@ -30,6 +31,8 @@ export const TodoTitle = styled.span`
     color: ${props => props.theme.colors.black500};
     font-size: 18px;
     font-weight: bold;
+
+    min-width: 60%;
 
     margin: 20px;
 `;

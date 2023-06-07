@@ -12,13 +12,7 @@ interface ICardProps {
 }
 export default function Card({ task, parentTodo, isFinished, onFinishTask, onUpdateOptionPressed, onDeleteOptionPressed }: ICardProps) {
   return (
-    <Container>
-      <Option onClick={onFinishTask}>
-        {isFinished && (
-          <AiFillCheckSquare />
-        )}
-      </Option>
-        
+    <Container>  
       <TodoTitle>{task}</TodoTitle>
 
       <Option onClick={onUpdateOptionPressed}>
@@ -33,6 +27,12 @@ export default function Card({ task, parentTodo, isFinished, onFinishTask, onUpd
 
       <Option onClick={onDeleteOptionPressed}>
         <AiFillDelete />
+      </Option>
+
+      <Option onClick={onFinishTask}>
+        {isFinished && (
+          <AiFillCheckSquare />
+        )}
       </Option>
 
     </Container>

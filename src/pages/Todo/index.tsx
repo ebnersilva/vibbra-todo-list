@@ -134,15 +134,17 @@ export default function Todo() {
             />
           </FormGroup>
 
-          <FormGroup>
-            <span>Informe o todo pai</span>
-            <Select onChange={(e) => setParentTodo(e.target.value)}>
-              <option value=''>Nenhum</option>
-              {todos.map(todo => (
-                <option key={todo.id} value={todo.id}>{todo.task}</option>
-              ))}
-            </Select>
-          </FormGroup>
+          {todos.length > 0 && (
+            <FormGroup>
+              <span>Informe o todo pai</span>
+              <Select onChange={(e) => setParentTodo(e.target.value)}>
+                <option value=''>Nenhum</option>
+                {todos.map(todo => (
+                  <option key={todo.id} value={todo.id}>{todo.task}</option>
+                ))}
+              </Select>
+            </FormGroup>
+          )}
 
           <FormGroup>
             <Button onClick={handleAddTodo}>
