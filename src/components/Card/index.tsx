@@ -1,5 +1,5 @@
 import { Container, HasSubTodoContainer, TodoTitle, OptionsContainer, Option, Footer } from './styles'
-import { AiFillCheckSquare, AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillCheckSquare, AiFillDelete, AiFillEdit, AiOutlineShareAlt } from "react-icons/ai";
 
 interface ICardProps {
   task: string;
@@ -11,8 +11,9 @@ interface ICardProps {
   onFinishTask: () => void;
   onUpdateOptionPressed: () => void;
   onDeleteOptionPressed: () => void;
+  onShareOptionPressed: () => void;
 }
-export default function Card({ task, parentTodo, isFinished, ownerEmail, isMine, onFinishTask, onUpdateOptionPressed, onDeleteOptionPressed }: ICardProps) {
+export default function Card({ task, parentTodo, isFinished, ownerEmail, isMine, onFinishTask, onUpdateOptionPressed, onDeleteOptionPressed, onShareOptionPressed }: ICardProps) {
 
   return (
     <Container>  
@@ -30,9 +31,15 @@ export default function Card({ task, parentTodo, isFinished, ownerEmail, isMine,
         )}
 
         {isMine && (
-          <Option onClick={onDeleteOptionPressed}>
-            <AiFillDelete />
-          </Option>
+          <>
+            <Option onClick={onDeleteOptionPressed}>
+              <AiFillDelete />
+            </Option>
+
+            <Option onClick={onShareOptionPressed}>
+              <AiOutlineShareAlt />
+            </Option>
+          </>
         )}
 
         <Option onClick={onFinishTask}>

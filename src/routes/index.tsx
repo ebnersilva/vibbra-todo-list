@@ -7,6 +7,7 @@ import Todo from "../pages/Todo";
 import About from "../pages/About";
 import Layout from "../pages/Layout";
 import EditTodo from "../pages/EditTodo";
+import ShareTodo from "../pages/ShareTodo";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
@@ -40,6 +41,10 @@ function PrivateRoutes() {
         <Route
           path="edit-todo/:todoId"
           element={<EditTodo />}
+        />
+        <Route
+          path="share-todo/:todoId"
+          element={<ShareTodo />}
         />
       </Route>
     </Routes>
