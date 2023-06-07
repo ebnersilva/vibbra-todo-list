@@ -6,7 +6,6 @@ import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { toast } from 'react-toastify';
-import { FirebaseError } from 'firebase/app';
 
 export default function Login() {
   const [isSigning, setIsSigning] = useState(true);
@@ -24,9 +23,8 @@ export default function Login() {
         return;
       }
       await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
-    }catch (error) {
-      console.log(error)
-      alert('Erro ao se cadastrar. Tente novamente!');
+    }catch (err: any) {
+      toast(`Erro ao cadastrar: ${err.code}`)
     }
   }, [registerEmail, registerPassword]);
 
@@ -38,7 +36,7 @@ export default function Login() {
 
       try {
         await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      } catch (err: FirebaseError | any) {
+      } catch (err: any) {
         toast(`Erro ao fazer login: ${err.code}`)
       }
   }, [loginEmail, loginPassword]);
