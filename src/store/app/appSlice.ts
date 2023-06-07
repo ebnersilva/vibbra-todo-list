@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface IApp  {
   isSidebarOpened: boolean;
   isAddTodoModalOpened: boolean;
-  isViewTodoModalOpened: boolean;
 }
 
 interface TodoState {
@@ -12,9 +11,8 @@ interface TodoState {
 
 const initialState: TodoState = {
   data: {
-    isSidebarOpened: true,
+    isSidebarOpened: false,
     isAddTodoModalOpened: false,
-    isViewTodoModalOpened: false,
   }
 }
 
@@ -29,14 +27,11 @@ const appSlice = createSlice({
     toggleAddTodoModalOpened(state) {
       state.data.isAddTodoModalOpened = !state.data.isAddTodoModalOpened;
     },
-    toggleViewTodoModalOpened(state) {
-      state.data.isViewTodoModalOpened = !state.data.isViewTodoModalOpened;
-    }
   }
 });
 
 
-export const { toggleSidebar, toggleAddTodoModalOpened, toggleViewTodoModalOpened } = appSlice.actions;
+export const { toggleSidebar, toggleAddTodoModalOpened } = appSlice.actions;
 
 export default appSlice.reducer
 

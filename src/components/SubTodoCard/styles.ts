@@ -6,10 +6,12 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
+  background: ${props => props.theme.colors.black00};
+
   position: relative;
 
   width: 350px;
-  height: 100px;
+  height: 80px;
 
   border-radius: 8px;
 
@@ -25,34 +27,46 @@ export const Container = styled.div`
 `;
 
 export const TodoTitle = styled.span`
-    color: ${props => props.theme.colors.black500};
-    font-size: 18px;
-    font-weight: bold;
+  color: ${props => props.theme.colors.black500};
+  font-size: 18px;
+  font-weight: bold;
 
-    margin-left: 20px;
-    margin-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 export const Option = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 
-  height: 40px;
-  width: 40px;
+  margin-right: 12px;
 
-  border-radius: 8px;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+  min-width: 80px;
 
-  transition: all 0.3s;
 
-  &:hover {
-    background: ${({ theme }) => darken(0.03, theme.colors.black00)};
+  span {
+    font-size: 10px;
+    color: ${props => props.theme.colors.black500};
   }
 
   svg {
     font-size: 30px;
     color: ${props => props.theme.colors.black500};
+  }
+`;
+
+export const CheckboxContainer = styled.div`
+  display: flex;
+  height: 30px;
+  width: 30px;
+  background: ${props => props.theme.colors.black500};
+  border-radius: 4px;
+
+  svg {
+    font-size: 30px;
+    color: ${props => props.theme.colors.black00};
   }
 `;
 

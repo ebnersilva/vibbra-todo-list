@@ -39,16 +39,3 @@ export const Form = styled.div`
 
   width: 90%;
 `;
-
-export const SubTodosContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  width: 90%;
-
-  overflow-y: auto;
-
-  margin: 12px;
-`;

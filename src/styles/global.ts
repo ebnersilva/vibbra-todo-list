@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root {
       height:100vh;
       overflow-x:hidden;
+      background: rgba(0, 0, 0, 0.04);
   }
 
   button {

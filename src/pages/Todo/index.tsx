@@ -1,34 +1,37 @@
-import { child, get, onValue, ref, set, update } from 'firebase/database';
-import { Container, Form, TodosContainer, EmptyDataText, SubTodosContainer } from './styles';
+import { onValue, ref, remove, update } from 'firebase/database';
+import { Container, Form, TodosContainer, EmptyDataText } from './styles';
 import { firebaseDatabase } from '../../services/firebase';
 
-import { v4 as uuidv4 } from 'uuid'
 import { ITodo, ITodoBody, setData } from '../../store/todos/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Card from '../../components/Card';
 import { useCallback, useEffect, useState } from 'react';
 import Modal from '../../components/Modal';
-import { toggleAddTodoModalOpened, toggleViewTodoModalOpened } from '../../store/app/appSlice';
+import { toggleAddTodoModalOpened } from '../../store/app/appSlice';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import FormGroup from '../../components/FormGroup';
 import Select from '../../components/Select';
-import SubTodoCard from '../../components/SubTodoCard';
+import { useNavigate } from 'react-router-dom';
+
+import useTodo from '../../hooks/useTodo';
 
 export default function Todo() {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
-  const [selectedTodoId, setSelectedTodoId] = useState('');
+  const { addTodo } = useTodo();
+
   const [todoValue, setTodoValue] = useState('');
   const [parentTodo, setParentTodo] = useState('');
 
   const [subTodos, setSubTodos] = useState<ITodo[]>([]);
 
   const todos = useAppSelector(state => state.todos.data);
-  const {isAddTodoModalOpened, isViewTodoModalOpened} = useAppSelector(state => state.app.data);
+  const {isAddTodoModalOpened} = useAppSelector(state => state.app.data);
 
   function clearForm() {
-    setSelectedTodoId('');
     setTodoValue('');
     setParentTodo('');
     setSubTodos([])
@@ -38,90 +41,25 @@ export default function Todo() {
     dispatch(toggleAddTodoModalOpened());
   }
 
-  function handleCloseViewTodoModal() {
-    dispatch(toggleViewTodoModalOpened());
-  }
-
-  function handleOpenUpdateTodoModal(todo: ITodo) {
-    dispatch(toggleViewTodoModalOpened());
-    setSelectedTodoId(todo.id);
-    setTodoValue(todo.task);
-    
-    const dbRef = ref(firebaseDatabase);
-    get(child(dbRef, `todos`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        
-        const parsedTodos = Object.entries(data).map(([key, value]: any) => {
-          const todoBody: ITodoBody = value; 
-          
-          return {
-            id: key,
-            ...todoBody
-          };
-        });
-
-        const onlySubTodos = parsedTodos.filter(filteredTodo => filteredTodo.parentTodo === todo.id);
-
-        setSubTodos(onlySubTodos)
-          
-        } else {
-          console.log("No data available");
-        }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
-  function handleAddTodo() {
-    if (!todoValue) {
-      alert('Dados inválidos');
+  async function handleDeleteTodo(todoId: string) {
+    if (!todoId) {
+      alert('Id inválido')
       return;
     }
 
-    const id = uuidv4();
-
-    try {
-
-      set(ref(firebaseDatabase, `todos/${id}`), {
-        task: todoValue,
-        parentTodo: parentTodo || '',
-        isFinished: false
-      });
-
-    } catch (err) {
-      alert('Erro ao inserir os dados!');      
-    } finally {
-      dispatch(toggleAddTodoModalOpened());
-      clearForm();
-    }
+    const refCards = ref(firebaseDatabase, `todos/${todoId}`);
+    await remove(refCards);
   }
 
-  const handleUpdateTodo = async () => {
-    if (!selectedTodoId || !todoValue) {
-      alert('Dados inválidos!')
+  async function handleAddTodo() {
+    const { status, message } = await addTodo(todoValue, parentTodo);
+
+    if (!status) {
+      alert(message)
       return;
     }
 
-    const dbRef = ref(firebaseDatabase);
-    get(child(dbRef, `todos/${selectedTodoId}`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        const todo: ITodo = snapshot.val();
-
-        const updates: Record<string, ITodo> = {
-          [`todos/${selectedTodoId}`]: { ...todo, task: todoValue },
-        };    
-    
-        await update(ref(firebaseDatabase), updates);
-        
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-
-    dispatch(toggleViewTodoModalOpened());
+    dispatch(toggleAddTodoModalOpened());
     clearForm();
   }
 
@@ -133,23 +71,13 @@ export default function Todo() {
     return update(ref(firebaseDatabase), updates);
   }
 
-  const handleDesvinculateTodo = (todo: ITodo) => {
-    const updates: Record<string, ITodo> = {
-      [`todos/${todo.id}`]: { ...todo, parentTodo: '' },
-    };
-
-    update(ref(firebaseDatabase), updates);
-
-    setSubTodos(prevState => prevState.filter(prevTodos => prevTodos.id !== todo.id))
-  }
-
   const handleRefresh = useCallback(() => {
     const starCountRef = ref(firebaseDatabase, 'todos');
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
 
       if (!data) {
-        setData([]);
+        dispatch(setData([]))
         return;
       }
 
@@ -188,7 +116,8 @@ export default function Todo() {
             parentTodo={todo.parentTodo} 
             isFinished={todo.isFinished}
             onFinishTask={() => handleMakeTodoFinished(todo)}
-            onUpdateOptionPressed={() => handleOpenUpdateTodoModal(todo)}
+            onUpdateOptionPressed={() => navigate(`edit-todo/${todo.id}`)}
+            onDeleteOptionPressed={() => handleDeleteTodo(todo.id)}
           />
         ))}
       </TodosContainer>
@@ -220,45 +149,6 @@ export default function Todo() {
 
           <FormGroup>
             <Button onClick={handleAddTodo}>
-              SALVAR
-            </Button>
-          </FormGroup>
-        </Form>
-      </Modal>
-      
-      <Modal 
-        title="ALTERAR TODO"
-        show={isViewTodoModalOpened} 
-        onClose={handleCloseViewTodoModal}
-      >
-        <Form>
-          <FormGroup>
-            <Input 
-              placeholder="Nome da tarefa" 
-              onChange={(e) => setTodoValue(e.target.value)} 
-              value={todoValue}
-            />
-          </FormGroup>
-
-
-          {subTodos.length > 0 && (
-            <SubTodosContainer>
-              {subTodos.map(todo => (
-                <SubTodoCard 
-                  isFinished={todo.isFinished}
-                  onFinishTask={() => handleMakeTodoFinished(todo)}
-                  onDeleteButtonPressed={() => handleDesvinculateTodo(todo)}
-                  subTask={todo.parentTodo}
-                  task={todo.task}
-                  key={todo.id}
-                />
-              ))}
-            </SubTodosContainer>
-          )}
-          
-
-          <FormGroup>
-            <Button onClick={handleUpdateTodo}>
               SALVAR
             </Button>
           </FormGroup>

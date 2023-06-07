@@ -6,6 +6,8 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
+  background: ${props => props.theme.colors.black00};
+
   position: relative;
 
   width: 350px;
@@ -29,8 +31,7 @@ export const TodoTitle = styled.span`
     font-size: 18px;
     font-weight: bold;
 
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px;
 `;
 
 export const Option = styled.button`
@@ -38,8 +39,11 @@ export const Option = styled.button`
   align-items: center;
   justify-content: center;
 
+  background: ${props => props.theme.colors.black00};
+
   height: 40px;
   width: 40px;
+  margin-right: 10px;
 
   border-radius: 8px;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);

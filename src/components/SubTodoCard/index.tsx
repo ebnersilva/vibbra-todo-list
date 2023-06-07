@@ -1,5 +1,5 @@
-import { Container, TodoTitle, Option } from './styles'
-import { AiFillCheckSquare, AiOutlineDelete } from "react-icons/ai";
+import { Container, TodoTitle, Option, CheckboxContainer } from './styles'
+import {  AiOutlineArrowsAlt, AiOutlineCheck } from "react-icons/ai";
 
 interface ISubTodoCardProps {
   task: string;
@@ -11,17 +11,29 @@ interface ISubTodoCardProps {
 }
 export default function SubTodoCard({ task, isFinished, onFinishTask, onDeleteButtonPressed }: ISubTodoCardProps) {
   return (
-    <Container>
-      <Option onClick={onFinishTask}>
-        {isFinished && (
-          <AiFillCheckSquare />
-        )}
-      </Option>
-        
+    <Container>  
       <TodoTitle>{task}</TodoTitle>
 
       <Option onClick={onDeleteButtonPressed}>
-        <AiOutlineDelete />
+        <AiOutlineArrowsAlt />
+        <span>Desvincular</span>
+      </Option>
+
+      <Option onClick={onFinishTask}>
+        {isFinished && (
+          <>
+            <CheckboxContainer>
+              <AiOutlineCheck />
+            </CheckboxContainer>
+            <span>Concluido</span>
+          </>
+        )}
+        {!isFinished && (
+          <>
+          <CheckboxContainer />
+          <span>Não concluído</span>
+          </>
+        )}  
       </Option>
 
     </Container>
