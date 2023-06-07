@@ -24,7 +24,7 @@ export default function Login() {
       await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
     }catch (error) {
       console.log(error)
-      alert('Erro: ', error);
+      alert('Erro ao se cadastrar. Tente novamente!');
     }
   }, [registerEmail, registerPassword]);
 
@@ -36,7 +36,7 @@ export default function Login() {
       }
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
     }catch (error) {
-      alert('Erro: ', error);
+      alert('Erro ao fazer o login. Tente novamente!');
     }
   }, [loginEmail, loginPassword]);
 
