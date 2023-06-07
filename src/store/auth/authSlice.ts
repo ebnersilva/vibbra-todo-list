@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from 'firebase/auth';
-
-export interface PayloadSetUserLoggedIn {
-  data: User | null;
+export interface IUserLoggedIn {
+  uid: string;
+  email: string;
 }
-
+export interface PayloadSetUserLoggedIn {
+  data: IUserLoggedIn | null;
+}
 export interface IAuth {
-  userLoggedIn: User | null;
+  userLoggedIn: IUserLoggedIn | null;
   isAuthChecked: boolean;
 }
 
