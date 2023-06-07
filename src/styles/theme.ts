@@ -7,6 +7,8 @@ export const theme = {
     black500: '#081224',
 
     gray200: '#F2F2F2',
-    gray300: '#9B9793'
+    gray300: '#9B9793',
+
+    green500: '#30AE6F'
   }
 };

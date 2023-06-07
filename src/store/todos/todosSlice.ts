@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ITodoBody {
   task: string;
-  subTask: string;
+  parentTodo: string;
+  isFinished: boolean;
 }
 
 export interface ITodo extends ITodoBody {

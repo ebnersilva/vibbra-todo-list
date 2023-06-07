@@ -1,8 +1,8 @@
-import { Container, Title, ButtonToggle } from './styles';
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { Container, LeftCard, Title, ButtonToggle, AddButton } from './styles';
+import { AiOutlineMenu, AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useTheme } from 'styled-components';
-import { toggleSidebar } from '../../store/app/appSlice';
+import { toggleAddTodoModalOpened, toggleSidebar } from '../../store/app/appSlice';
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -15,19 +15,30 @@ export default function Header() {
     dispatch(toggleSidebar());
   }
 
+  function handleAddTodo() {
+    dispatch(toggleAddTodoModalOpened());
+  }
+
   return (
     <Container>
-      <ButtonToggle onClick={handleOnClickHeader}>
-        {isSidebarOpened && (
-          <AiOutlineClose size={20} color={colors.black500} />
-        )}
+      <LeftCard>
+        <ButtonToggle onClick={handleOnClickHeader}>
+          {isSidebarOpened && (
+            <AiOutlineClose size={20} color={colors.black500} />
+          )}
 
-        {!isSidebarOpened && (
-          <AiOutlineMenu size={20} color={colors.black500} />
-        )}
-      </ButtonToggle>
+          {!isSidebarOpened && (
+            <AiOutlineMenu size={20} color={colors.black500} />
+          )}
+        </ButtonToggle>
+        
+        <Title>Vibbra - Todo App</Title>
+      </LeftCard>
 
-      <Title>Vibbra - Todo App</Title>
+      <AddButton onClick={handleAddTodo}>
+        <AiFillPlusCircle size={20} color={colors.black500} />
+      </AddButton>
+
     </Container>
   )
 }

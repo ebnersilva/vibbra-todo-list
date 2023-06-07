@@ -26,6 +26,10 @@ export const Container = styled.div<IContainerProps>`
     transform: translateX(-312px);
   `}
 
+  position: absolute;
+  top: 54px;
+  bottom: 4px;
+
 `;
 
 export const SidebarItem = styled.button`
