@@ -108,7 +108,7 @@ export default function EditTodo() {
       return;
     }
 
-    navigate('/')
+    chargeSubTodos(todoId);
   }
 
   useEffect(() => {
@@ -124,13 +124,13 @@ export default function EditTodo() {
     <Container>
       <Form>
         <FormGroup>
+          <span>Nome da tarefa</span>
           <Input 
             placeholder="Nome da tarefa" 
             onChange={(e) => setTodoValue(e.target.value)} 
             value={todoValue}
           />
         </FormGroup>
-
 
         {subTodos.length > 0 && (
           <SubTodosContainer>

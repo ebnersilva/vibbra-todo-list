@@ -4,14 +4,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   background: ${props => props.theme.colors.black00};
 
   position: relative;
 
-  width: 350px;
-  height: 80px;
+  width: 100%;
+  height: 50px;
 
   border-radius: 8px;
 
@@ -28,7 +28,7 @@ export const Container = styled.div`
 
 export const TodoTitle = styled.span`
   color: ${props => props.theme.colors.black500};
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
 
   margin-left: 20px;

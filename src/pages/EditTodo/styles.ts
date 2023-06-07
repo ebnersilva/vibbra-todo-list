@@ -20,6 +20,10 @@ export const Form = styled.div`
   justify-content: center;
   flex-direction: column ;
 
+  background: ${props => props.theme.colors.black00};
+
+  border-radius: 8px;
+
 
   width: 60%;
 
@@ -32,7 +36,7 @@ export const SubTodosContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 
-  width: 90%;
+  width: 100%;
 
   overflow-y: auto;
 

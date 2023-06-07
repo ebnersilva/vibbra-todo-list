@@ -4,7 +4,7 @@ export default styled.input`
   width: 100%;
   border: 2px solid ${props => props.theme.colors.black00};
   background: ${props => props.theme.colors.black00};
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
   height: 52px;
   border-radius: 4px;
   outline: none;

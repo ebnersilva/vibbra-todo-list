@@ -26,15 +26,12 @@ export default function Todo() {
   const [todoValue, setTodoValue] = useState('');
   const [parentTodo, setParentTodo] = useState('');
 
-  const [subTodos, setSubTodos] = useState<ITodo[]>([]);
-
   const todos = useAppSelector(state => state.todos.data);
   const {isAddTodoModalOpened} = useAppSelector(state => state.app.data);
 
   function clearForm() {
     setTodoValue('');
     setParentTodo('');
-    setSubTodos([])
   }
 
   function handleCloseAddTodoModal() {
