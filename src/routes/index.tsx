@@ -3,7 +3,7 @@ import {
   Routes,
 } from "react-router-dom";
 import Login from "../pages/Login";
-import Todo from "../pages/Todo";
+import TodosList from "../pages/TodosList";
 import About from "../pages/About";
 import Layout from "../pages/Layout";
 import EditTodo from "../pages/EditTodo";
@@ -32,7 +32,7 @@ function PrivateRoutes() {
       <Route path="/" element={<Layout />}>
         <Route         
           index
-          element={<Todo />}
+          element={<TodosList />}
         />
         <Route
           path="about"

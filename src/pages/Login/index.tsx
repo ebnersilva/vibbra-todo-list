@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import Button from '../../components/Button';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import { toast } from 'react-toastify';
 
 export default function Login() {
@@ -68,7 +68,7 @@ export default function Login() {
           </FormGroup>
           
           <FormGroup>
-            <Button onClick={handleLogin}>Logar usuário</Button>
+            <ButtonPrimary onClick={handleLogin}>Logar usuário</ButtonPrimary>
           </FormGroup>
 
           <BottonText onClick={handleOnSignUp}>Ainda não tem uma conta? Cadastre-se</BottonText>
@@ -84,7 +84,7 @@ export default function Login() {
           </FormGroup>
 
           <FormGroup>
-            <Button onClick={handleRegister}>Cadastrar Usuário</Button>
+            <ButtonPrimary onClick={handleRegister}>Cadastrar Usuário</ButtonPrimary>
           </FormGroup>
 
           <BottonText onClick={handleOnSignIn}>Já possuí uma conta? Faça login</BottonText>

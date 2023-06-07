@@ -2,15 +2,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Form, SubTodosContainer } from './styles';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import Button from '../../components/Button';
+import ButtonPrimary from '../../components/ButtonPrimary';
+import ButtonSecondary from '../../components/ButtonSecondary';
 import { useCallback, useEffect, useState } from 'react';
 import { firebaseDatabase } from '../../services/firebase';
 import { child, get, ref } from 'firebase/database';
 import { ITodo, ITodoBody } from '../../store/todos/todosSlice';
 import SubTodoCard from '../../components/SubTodoCard';
 import useTodo from '../../hooks/useTodo';
+import AddSubTodoModal from '../../components/AddSubTodoModal';
+import { useAppDispatch } from '../../store/hooks';
+import { toggleAddSubTodoModalOpened } from '../../store/app/appSlice';
+import { toast } from 'react-toastify';
 
 export default function EditTodo() {
+  const dispatch = useAppDispatch();
+
   const { todoId } = useParams();
   const navigate = useNavigate();
 
@@ -20,12 +27,15 @@ export default function EditTodo() {
   const [subTodos, setSubTodos] = useState<ITodo[]>([]);
 
 
-  const chargeSubTodos = useCallback((todoIdParam: string) => {
+  const chargeSubTodos = useCallback( async (todoIdParam: string) => {
     const dbRef = ref(firebaseDatabase);
-    get(child(dbRef, `todos`)).then((snapshot) => {
+
+    try {
+      const snapshot = await get(child(dbRef, `todos`));
+
       if (snapshot.exists()) {
         const data = snapshot.val();
-        
+          
         const parsedTodos = Object.entries(data).map(([key, value]: any) => {
           const todoBody: ITodoBody = value; 
           
@@ -35,16 +45,15 @@ export default function EditTodo() {
           };
         });
 
-        const onlySubTodos = parsedTodos.filter(filteredTodo => filteredTodo.parentTodo === todoIdParam);
+        const onlySubTodos = parsedTodos.filter(filteredTodo => filteredTodo.parentTodo === todoIdParam).sort((a, b) => Number(a.createdAt) - Number(b.createdAt));
+
+        console.log('Sub Todos: ', onlySubTodos)
 
         setSubTodos(onlySubTodos)
-          
-        } else {
-          console.log("No data available");
-        }
-    }).catch((error) => {
-      console.error(error);
-    });
+      }
+    } catch (err) {
+      toast.error('Falha ao carregar os sub todos');
+    }
   }, [])
 
   const chargeMainTodoData = useCallback((todoIdParam: string) => {
@@ -65,7 +74,7 @@ export default function EditTodo() {
 
   const handleUpdateTodo = async () => {
     if (!todoId) {
-      alert('Id do todo inválido');
+      toast.error('Id do TODO inválido');
       return;
     }
 
@@ -76,6 +85,7 @@ export default function EditTodo() {
       return;
     }
 
+    toast.success('Dados alterados com sucesso')
     navigate('/');
   }
 
@@ -97,18 +107,31 @@ export default function EditTodo() {
       return;
     }
 
-    chargeSubTodos(todoId);
+    await chargeSubTodos(todoId);
+
+    toast.success('Dados alterados com sucesso!');
   }
 
-  const handleDesvinculateTodo = async (todoId: string) => {
-    const {status, message} = await desvinculateTodo(todoId)
+  const handleDesvinculateTodo = async (desvinculateTodoId: string) => {
+    if (!todoId) {
+      toast.error('Erro inesperado. Tente novamente!');
+      return;
+    }
+
+    const {status, message} = await desvinculateTodo(desvinculateTodoId)
     
     if (!status) {
       alert(message)
       return;
     }
 
-    chargeSubTodos(todoId);
+    await chargeSubTodos(todoId);
+
+    toast.success('Sucesso ao desvincular o todo')
+  }
+
+  const handleOpenAddSubTodoModal = () => {
+    dispatch(toggleAddSubTodoModalOpened())
   }
 
   useEffect(() => {
@@ -149,11 +172,23 @@ export default function EditTodo() {
         
 
         <FormGroup>
-          <Button onClick={handleUpdateTodo}>
+          <ButtonSecondary onClick={handleOpenAddSubTodoModal}>
+            ADICIONAR SUB TODO
+          </ButtonSecondary>
+        </FormGroup>
+
+        <FormGroup>
+          <ButtonPrimary onClick={handleUpdateTodo}>
             SALVAR
-          </Button>
+          </ButtonPrimary>
         </FormGroup>
       </Form>
+
+      {todoId && (
+        <AddSubTodoModal todoId={todoId} onSubTodoAdded={() => {
+          chargeSubTodos(todoId);
+        }} />
+      )}
     </Container>
   )
 

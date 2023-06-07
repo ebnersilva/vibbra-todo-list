@@ -12,31 +12,38 @@ export const Container = styled.div`
 
   width: 30%;
   height: 110px;
+  margin: 6px;
 
   border-radius: 8px;
 
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
-
-  margin: 8px;
 
   transition: all 0.3s;
 
   &:hover {
     background: ${({ theme }) => darken(0.03, theme.colors.black00)};
   }
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const TodoTitle = styled.span`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    color: ${props => props.theme.colors.black500};
-    font-size: 14px;
-    font-weight: bold;
-    width: 100%;
+  color: ${props => props.theme.colors.black500};
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
 `;
 
 export const OptionsContainer = styled.div`

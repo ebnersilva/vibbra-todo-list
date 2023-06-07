@@ -1,7 +1,7 @@
 import { Container, Form } from './styles';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import Button from '../../components/Button';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -57,9 +57,9 @@ export default function ShareTodo() {
         
 
         <FormGroup>
-          <Button onClick={sendEmail}>
+          <ButtonPrimary onClick={sendEmail}>
             COMPARTILHAR
-          </Button>
+          </ButtonPrimary>
         </FormGroup>
       </Form>
     </Container>

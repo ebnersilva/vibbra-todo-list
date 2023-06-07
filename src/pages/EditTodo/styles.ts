@@ -20,14 +20,14 @@ export const Form = styled.div`
   justify-content: center;
   flex-direction: column ;
 
+  position: relative;
+  
   background: ${props => props.theme.colors.black00};
-
+  
   border-radius: 8px;
 
-
+  padding: 20px;
   width: 60%;
-
-  padding: 40px;
 `;
 
 export const SubTodosContainer = styled.div`
@@ -37,8 +37,11 @@ export const SubTodosContainer = styled.div`
   flex-wrap: wrap;
 
   width: 100%;
+  max-height: 300px;
 
-  overflow-y: auto;
+  overflow-y: scroll;
 
-  margin: 12px;
+  margin-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;

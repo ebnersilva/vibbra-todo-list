@@ -13,7 +13,7 @@ interface ICardProps {
   onDeleteOptionPressed: () => void;
   onShareOptionPressed: () => void;
 }
-export default function Card({ task, parentTodo, isFinished, ownerEmail, isMine, onFinishTask, onUpdateOptionPressed, onDeleteOptionPressed, onShareOptionPressed }: ICardProps) {
+export default function ParentTodoCard({ task, parentTodo, isFinished, ownerEmail, isMine, onFinishTask, onUpdateOptionPressed, onDeleteOptionPressed, onShareOptionPressed }: ICardProps) {
 
   return (
     <Container>  
