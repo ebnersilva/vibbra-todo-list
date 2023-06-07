@@ -37,7 +37,7 @@ Para utilizar a aplicação primeiro é necessário você cadastrar ao menos 1 i
 - Os dados estão sendo salvos em realtime no firebase
 
 <p>
-:rocket: Você pode conferir a versão online aqui <a href="https://vibbra-todo-list-dk74i68h3-ebnersilva.vercel.app/" rel="">Vercel Deployment</a>.
+:rocket: Você pode conferir a versão online aqui <a href="https://vibbra-todo-list-coral.vercel.app" rel="">Vercel Deployment</a>.
 </p>
 
 <p>
