@@ -24,6 +24,8 @@ Trata-se de um projeto interno onde qualquer funcionário da empresa do Sr. Vibb
 
 Para utilizar a aplicação primeiro é necessário você cadastrar ao menos 1 item, feito isso você já conseguirá marcar como concluído, desmarcar como concluído, vincular um iterm como sub item, editar e excluir.
 
+- Cadastro de usuário
+- Login
 - Cadastro de um item
 - Alteração de um item
 - Vinculo como sub item
