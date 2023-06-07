@@ -1,4 +1,4 @@
-# Vibbra Teste [INVOICES-EXPENSES]
+# Vibbra Teste [TODO APP]
 
 Esse projeto foi criado utilizando o [Vite](https://vitejs.dev/).
 
@@ -43,6 +43,6 @@ Para utilizar a aplicação primeiro é necessário você cadastrar ao menos 1 i
 <p>
 :octocat: Para rodar a aplicação localmente
 </p>
-<p>(1) Crie um arquivo .env de acordo com o .env.example deixado na aplicação com os parametros do firebase</p>
+<p>(1) Crie um arquivo .env de acordo com o .env.example deixado na aplicação com os parametros do</p>
 <p>(2) Rode o comando $ yarn para instalar todas as dependencias</p>
 <p>(3) Rode o comando $ yarn dev para executar a aplicação</p>
