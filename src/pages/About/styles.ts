@@ -7,4 +7,8 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   
+  p {
+    max-width: 50%;
+    text-align: center;
+  }
 `;
