@@ -41,7 +41,7 @@ Para utilizar a aplicação primeiro é necessário você cadastrar ao menos 1 i
 </p>
 
 <p>
-:octocat: Para rodar a aplicação localmente
+Para rodar a aplicação localmente
 </p>
 <p>(1) Crie um arquivo .env de acordo com o .env.example deixado na aplicação com os parametros do</p>
 <p>(2) Rode o comando $ yarn para instalar todas as dependencias</p>
